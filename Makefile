@@ -26,13 +26,17 @@ OBJS_USER_C	=	$(SRCS:.c=.o)
 
 
 
-all	:	$(NAME_USER_C) $(NAME_USER_CXX)
 
 $(NAME_USER_CXX)	:	$(OBJS_USER_CXX)
-						$(CXX) -shared -o $(NAME) $(OBJS_USER_CXX)
+						$(CXX) -shared -o $(NAME_USER_CXX) $(OBJS_USER_CXX) -Lsrc/SFML-2.0/lib -lsfml-graphics -lsfml-window -lsfml-system
 
 $(NAME_USER_C)	:	$(OBJS_USER_C)
-					$(CC) -shared -o $(NAME) $(OBJS_USER_C)
+					$(CC) -shared -o $(NAME_USER_C) $(OBJS_USER_C) -Lsrc/SFML-2.0/lib -lsfml-graphics -lsfml-window -lsfml-system
+
+all	:	
+		export LD_LIBRARY_PATH=src/SFML-2.0/lib		
+		$(NAME_USER_C) 
+		$(NAME_USER_CXX)
 
 
 clean		:
